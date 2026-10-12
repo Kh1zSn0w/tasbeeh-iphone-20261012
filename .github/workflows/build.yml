@@ -1,0 +1,31 @@
+name: Build Tasbeeh IPA
+on: [push, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify counting behavior
+        run: |
+          swiftc Counts.swift tests/main.swift -o /tmp/tasbeeh-tests
+          /tmp/tasbeeh-tests
+      - name: Compile native iPhone app
+        run: |
+          mkdir -p Payload/Tasbeeh.app
+          SDK=$(xcrun --sdk iphoneos --show-sdk-path)
+          xcrun --sdk iphoneos swiftc Counts.swift main.swift -sdk "$SDK" -target arm64-apple-ios15.0 -O -framework UIKit -o Payload/Tasbeeh.app/Tasbeeh
+          python3 package.py
+          codesign --force --sign - Payload/Tasbeeh.app
+          codesign --verify --deep --strict Payload/Tasbeeh.app
+          file Payload/Tasbeeh.app/Tasbeeh
+          ditto -c -k --keepParent Payload Tasbeeh.ipa
+          unzip -t Tasbeeh.ipa
+          shasum -a 256 Tasbeeh.ipa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Tasbeeh-IPA
+          path: Tasbeeh.ipa
+          retention-days: 7
