@@ -48,6 +48,7 @@ final class Counts {
         guard !text.isEmpty, text.utf8.allSatisfy({ $0 >= 48 && $0 <= 57 }),
               let n = Int(text), n <= 9999999 else { return false }
         today = n
+        session = n
         undoAvailable = false
         save()
         return true

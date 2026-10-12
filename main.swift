@@ -165,7 +165,7 @@ final class SettingsViewController: UIViewController {
         input.layer.cornerRadius = 12
         input.accessibilityLabel = "Today's count"
         let hint = UILabel()
-        hint.text = "Set the exact total for today. Your session stays the same."
+        hint.text = "Set today’s total and the number in the counter."
         hint.numberOfLines = 0
         hint.textColor = ivory.withAlphaComponent(0.65)
         hint.font = .systemFont(ofSize: 14)
