@@ -33,10 +33,10 @@ final class CounterViewController: UIViewController {
         ornament.font = .systemFont(ofSize: 46)
         ornament.textColor = gold
         ornament.textAlignment = .center
-        let dhikr = UISegmentedControl(items: ["SubhanAllah", "Alhamdulillah", "Allahu Akbar"])
+        let dhikr = UISegmentedControl(items: ["SubhanAllah", "Alhamdulillah", "Allahu Akbar", "Astaghfirullah"])
         dhikr.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "dhikr")
         dhikr.selectedSegmentTintColor = gold
-        dhikr.setTitleTextAttributes([.foregroundColor: ivory, .font: UIFont.systemFont(ofSize: 11, weight: .medium)], for: .normal)
+        dhikr.setTitleTextAttributes([.foregroundColor: ivory, .font: UIFont.systemFont(ofSize: 10, weight: .medium)], for: .normal)
         dhikr.setTitleTextAttributes([.foregroundColor: emerald], for: .selected)
         dhikr.addTarget(self, action: #selector(changeDhikr(_:)), for: .valueChanged)
         circle.backgroundColor = UIColor.white.withAlphaComponent(0.035)
